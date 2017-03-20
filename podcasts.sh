@@ -47,6 +47,12 @@ if [[ ! -d "${outdir}" ]]; then
     exit 1
 fi
 
+# check for conf file
+if [[ ! -f "${conf}" ]]; then
+    echo "invalid config file ${conf}" >&2
+    exit 1
+fi
+
 lockfile -r 0 "${lockfile}" || exit 0
 trap "rm -f \"${lockfile}\"" EXIT KILL
 
