@@ -31,7 +31,9 @@ To download the latest podcast from each show, run
 
 This will download the latest podcasts from each show in
 `podcasts.conf` and store them in the given directory under show name
-subdirectories.
+subdirectories.  This script is very convenient for using in crontab, e.g., to download podcasts every hour
+
+    0 * * * * /path/to/podcasts.sh -o /path/to/store/podcasts > /tmp/podcasts.out 2>&1
 
 ## Advanced Usage
 
