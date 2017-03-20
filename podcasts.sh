@@ -48,7 +48,7 @@ if [[ ! -d "${outdir}" ]]; then
 fi
 
 # check for conf file
-if [[ ! -f "${conf}" ]]; then
+if [[ ! -f "${conf}" && "${conf}" != "" ]]; then
     echo "invalid config file ${conf}" >&2
     exit 1
 fi
