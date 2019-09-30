@@ -41,4 +41,4 @@ To download all podcasts instead of the latest, use `-a`.  Specify
 different lists of shows using `-f`.  For instance, to download all
 episodes of a single show from the default config file do
 
-    grep Crypto podcasts.conf | ./podcasts -a -f - -o /path/to/store/podcasts
+    grep Crypto podcasts.conf | ./podcasts.sh -a -f - -o /path/to/store/podcasts
