@@ -26,6 +26,6 @@
   <!--   <xsl:apply-templates/> -->
   <!-- </xsl:template> -->
 
-  <xsl:template match="/rss/channel/item">"<xsl:value-of select="enclosure[contains(@type,'audio')]/@url[1]" />" "<xsl:value-of select="../title[1]" />" "<xsl:value-of select="title[1]" />" "<xsl:value-of select="../image[1]/url[1]" />"
+  <xsl:template match="/rss/channel/item">"<xsl:value-of select="enclosure[contains(@type,'audio')]/@url[1]" />" "<xsl:value-of select="../title[1]" />" "<xsl:value-of select="title[1]" />" "<xsl:value-of select="../image[1]/url[1]" />" "<xsl:value-of select="pubDate[1]" />"
 </xsl:template>
 </xsl:transform>
