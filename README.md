@@ -35,10 +35,24 @@ subdirectories.  This script is very convenient for using in crontab, e.g., to d
 
     0 * * * * /path/to/podcasts.sh -o /path/to/store/podcasts > /tmp/podcasts.out 2>&1
 
+The script will automatically maintain a log (`download.log`) of
+previously downloaded podcasts to avoid ever redownloading them.
+
 ## Advanced Usage
+
+### Download all podcast episodes
 
 To download all podcasts instead of the latest, use `-a`.  Specify
 different lists of shows using `-f`.  For instance, to download all
 episodes of a single show from the default config file do
 
     grep Crypto podcasts.conf | ./podcasts.sh -a -f - -o /path/to/store/podcasts
+
+### Download several of the most recent episodes
+
+To download several of the most recent episodes, use `-n` with a
+number parameter, e.g., the following will download the ten most
+recent episodes:
+
+    grep Crypto podcasts.conf | ./podcasts.sh -n10 -f - -o /path/to/store/podcasts
+

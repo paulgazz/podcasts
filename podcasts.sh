@@ -9,11 +9,15 @@ outdir=""  # default outdir, blank for none
 listcmd="tac"  # order in which to download podcasts
 
 # download podcasts
-while getopts ":af:o:" opt; do
+while getopts ":an:f:o:" opt; do
   case $opt in
     a)
       # download all available podcasts
       filter="cat"
+      ;;
+    n)
+      # download last n podcasts
+      filter="head -n${OPTARG}"
       ;;
     f)
       if [[ $OPTARG == "-" ]]; then
