@@ -57,8 +57,9 @@ if [[ ! -f "${conf}" && "${conf}" != "" ]]; then
     exit 1
 fi
 
-lockfile -r 0 "${lockfile}" || exit 0
-trap "rm -f \"${lockfile}\"" EXIT KILL
+(
+# echo "wait for lock on /var/lock/.unison_sync.exclusivelock (fd 200) for 10 seconds"
+flock -x -w 10 200 || exit 1
 
 # get list of links of each rss feed
 cat $conf | grep -v "^#" | while read line; do
@@ -71,4 +72,4 @@ done > "${links}"
 # download each podcast from the list of links
 ${listcmd} "${links}" | xargs -L1 "$(dirname $0)/get_podcast.sh" "${outdir}"
 
-rm -f "${lockfile}"
+) 200>"${lockfile}"

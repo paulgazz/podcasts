@@ -7,9 +7,10 @@ latest episodes or all episodes.
 ## Dependencies
 
 - Bash shell script
-- Using the following unix command: `head`, `cat`, `tac` (`tac` may
+- Using the following unix commands: `head`, `cat`, `tac` (`tac` may
   not be available in all unix flavors.  If not, change `listcmd` to
   `cat` in `podcasts.sh`)
+- Uses `flock` for file locking
 - Uses both `curl` and `wget`
 - Uses `xsltproc` to run an rss parser (may need to install `xsltproc`
   package)
