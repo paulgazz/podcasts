@@ -27,7 +27,7 @@ local_path="$dir/$name.mp3"
 
 # check if file was downloaded already
 grep $local_path $download_log >/dev/null
-if [ ${?} -eq 1 ]; then
+if [[ ${?} -eq 1 || ${?} -eq 2 ]]; then
     target_path="$target_dir/$local_path"
 # if [ ! -f "$target_path" ]; then
     echo "Downloading the following podcast to $target_path"
