@@ -7,9 +7,10 @@ rssparser="$(dirname $0)/parse_enclosure.xsl"  # rss parser
 lockfile="$0.lock"  # lock file
 outdir=""  # default outdir, blank for none
 listcmd="tac"  # order in which to download podcasts
+newSpeed=1
 
 # download podcasts
-while getopts ":an:f:o:" opt; do
+while getopts ":an:f:o:s:" opt; do
   case $opt in
     a)
       # download all available podcasts
@@ -21,7 +22,7 @@ while getopts ":an:f:o:" opt; do
       ;;
     f)
       if [[ $OPTARG == "-" ]]; then
-          conf="" # read from standard in
+        conf="" # read from standard in
       else
         conf="$OPTARG"
       fi
@@ -30,8 +31,20 @@ while getopts ":an:f:o:" opt; do
       outdir="${OPTARG}"
       mkdir -p "${outdir}"
       if [[ "${?}" != "0" ]]; then
-          echo "unable to create output directory ${outdir}" >&2
-          exit 1
+        echo "unable to create output directory ${outdir}" >&2
+        exit 1
+      fi
+      ;;
+    s)
+      newSpeed="${OPTARG}"
+      re='^[0-9]+([.][0-9]+)?$'
+      if ! [[ $newSpeed =~ $re ]]; then
+        echo "Option -s requires a number" >&2
+        exit 1
+      fi
+      if [[ $(echo "$newSpeed>2" | bc) -eq 1 ]]; then
+        echo "Max speed-up value (option -s) is 2" >&2
+        exit 1
       fi
       ;;
     \?)
@@ -70,6 +83,6 @@ cat $conf | grep -v "^#" | while read line; do
 done > "${links}"
 
 # download each podcast from the list of links
-${listcmd} "${links}" | xargs -L1 "$(dirname $0)/get_podcast.sh" "${outdir}"
+${listcmd} "${links}" | xargs -L1 "$(dirname $0)/get_podcast.sh" "${outdir}" "${newSpeed}"
 
 ) 200>"${lockfile}"
