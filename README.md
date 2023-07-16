@@ -7,15 +7,15 @@ latest episodes or all episodes.
 ## Dependencies
 
 - Bash shell script
-- Using the following unix commands: `head`, `cat`, `tac` (`tac` may
-  not be available in all unix flavors.  If not, change `listcmd` to
-  `cat` in `podcasts.sh`)
+- Using the following standard unix commands: `head`, `cat`, `bc`
+- `tac` (`tac` may not be available in all unix flavors.  If not, change `listcmd` to `cat` in `podcasts.sh`)
 - Uses `flock` for file locking
 - Uses both `curl` and `wget`
 - Uses `xsltproc` to run an rss parser (may need to install `xsltproc`
   package)
 - Uses `id3v2` to tag downloaded audio files with podcast name and
   episode (may need to install `id3v2` package)
+- Uses `ffmpeg` to change podcast speed (only when the `-s` option is used)
 
 ## Setup
 
@@ -57,3 +57,10 @@ recent episodes:
 
     grep Crypto podcasts.conf | ./podcasts.sh -n10 -f - -o /path/to/store/podcasts
 
+### Re-encode podcast at a different speed
+
+To change the speed of the downloaded podcast, use `-s` with a speed
+multiplier, e.g, the following will download the latest episode and
+re-encode at 1.5x speed:
+
+    grep Show podcasts.conf | ./podcasts.sh -o test/ -f - -s 1.5
