@@ -1,3 +1,6 @@
 *~
 *.conf
 *.log
+
+*.code-workspace
+podcasts.sh.lock
