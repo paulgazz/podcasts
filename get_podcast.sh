@@ -4,7 +4,7 @@ cd $(dirname $0)
 download_log="./download.log"
 
 if [ $# -lt 4 ]; then
-    echo "USAGE: $(basename $0) target_dir speed fixed_name audio_url podcast_name episode_name artwork_url pubdate"
+    echo "USAGE: $(basename $0) target_dir speed fixed_name audio_url podcast_name episode_name artwork_url pubdate episode"
     exit 1
 fi
 
@@ -16,6 +16,7 @@ url="$4"
 rawname="$6"
 artwork_url="$7"
 rawdate="$8"
+episode="$9"
 echo "RAWDATE: $rawdate"
 album=$(echo "$rawdir" | tr "-" " " | tr -d "[:punct:]")
 song=$(echo "$rawname" | tr "-" " " | tr -d "[:punct:]")
@@ -36,10 +37,14 @@ if [[ ${?} -eq 1 || ${?} -eq 2 ]]; then
     echo $dir
     echo $name
     echo $pubdate
+    echo $episode
 
     mkdir -p "$(dirname "$target_path")"
     wget "$url" -O "$target_path"
     id3v2 --album "$album" --song "$song" "$target_path"
+    if [[ "$episode" != "" ]]; then
+      id3v2 --track "$episode" "$target_path"
+    fi
     echo "${local_path}" >> "${download_log}"
 
     # If desired speed is different than 1, change the speed
